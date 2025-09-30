@@ -125,26 +125,35 @@
         }
 
         input[type="number"] {
-            width: 136px;
-            padding: 8px 12px;
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            text-align: center;
-            font-size: 14px;
-            transition: all 0.2s ease;
-            outline: none;
-            background: #fff;
-        }
+    width: 177px;
+    padding: 8px 12px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    text-align: center;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    outline: none;
+    background: #fff;
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
 
-        input[type="number"]:focus {
-            border-color: var(--hanwha);
-            box-shadow: 0 0 0 3px rgba(255,102,0,0.1);
-        }
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 
-        input[type="number"]::placeholder {
-            color: #ccc;
-            font-style: italic;
-        }
+input[type="number"]:focus {
+    border-color: var(--hanwha);
+    box-shadow: 0 0 0 3px rgba(255,102,0,0.1);
+}
+
+input[type="number"]::placeholder {
+    color: #999;
+    font-weight: normal;
+}
 
         .result-card {
             background: linear-gradient(135deg, var(--hanwha), var(--hanwha-accent));
@@ -205,9 +214,9 @@
                 padding: 20px;
             }
             
-            input[type="number"] {
-                width: 80px;
-                font-size: 12px;
+    input[type="number"] {
+        width: 104px;
+        font-size: 12px;
             }
             
             .result-card .amount {
@@ -239,33 +248,33 @@
                         <tbody>
                             <tr>
                                 <td>리치 10년납</td>
-                                <td><input type="number" id="rich-10-count" value="0" min="0" placeholder="건"></td>
-                                <td><input type="number" id="rich-10-premium" value="0" min="0" placeholder="천원"></td>
+<td><input type="number" id="rich-10-count" value="" min="0" placeholder="건"></td>
+<td><input type="number" id="rich-10-premium" value="" min="0" placeholder="천원"></td>
                             </tr>
                             <tr>
                                 <td>리치 5/7년납</td>
-                                <td><input type="number" id="rich-57-count" value="0" min="0" placeholder="건"></td>
-                                <td><input type="number" id="rich-57-premium" value="0" min="0" placeholder="천원"></td>
+<td><input type="number" id="rich-57-count" value="" min="0" placeholder="건"></td>
+<td><input type="number" id="rich-57-premium" value="" min="0" placeholder="천원"></td>
                             </tr>
                             <tr>
                                 <td>한아름/시그니처</td>
-<td><input type="number" id="hanareum-count" value="0" min="0" placeholder="건"></td>
-<td><input type="number" id="hanareum-premium" value="0" min="0" placeholder="천원"></td>
+<td><input type="number" id="hanareum-count" value="" min="0" placeholder="건"></td>
+<td><input type="number" id="hanareum-premium" value="" min="0" placeholder="천원"></td>
                             </tr>
                             <tr>
                                 <td>3N5등 유병자</td>
-<td><input type="number" id="sick-count" value="0" min="0" placeholder="건"></td>
-<td><input type="number" id="sick-premium" value="0" min="0" placeholder="천원"></td>
+<td><input type="number" id="sick-count" value="" min="0" placeholder="건"></td>
+<td><input type="number" id="sick-premium" value="" min="0" placeholder="천원"></td>
                             </tr>
                             <tr>
                                 <td>어린이/자녀</td>
-<td><input type="number" id="child-count" value="0" min="0" placeholder="건"></td>
-<td><input type="number" id="child-premium" value="0" min="0" placeholder="천원"></td>
+<td><input type="number" id="child-count" value="" min="0" placeholder="건"></td>
+<td><input type="number" id="child-premium" value="" min="0" placeholder="천원"></td>
                             </tr>
                             <tr>
                                 <td>기타 인보장</td>
-                                <td><input type="number" id="other-count" value="0" min="0" placeholder="건"></td>
-                                <td><input type="number" id="other-premium" value="0" min="0" placeholder="천원"></td>
+<td><input type="number" id="other-count" value="" min="0" placeholder="건"></td>
+<td><input type="number" id="other-premium" value="" min="0" placeholder="천원"></td>
                             </tr>
                         </tbody>
                     </table>

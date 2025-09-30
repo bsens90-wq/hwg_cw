@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>보험 시상 계산기</title>
+    <title>개시차 돈벼락 계산기</title>
     <style>
-:root{
+        :root{
             --hanwha:#ff6600;
             --hanwha-dark:#e65100;
             --hanwha-light:#fff3e0;
@@ -141,6 +141,11 @@
             box-shadow: 0 0 0 3px rgba(255,102,0,0.1);
         }
 
+        input[type="number"]::placeholder {
+            color: #ccc;
+            font-style: italic;
+        }
+
         .result-card {
             background: linear-gradient(135deg, var(--hanwha), var(--hanwha-accent));
             color: white;
@@ -191,36 +196,6 @@
             box-shadow: 0 6px 16px rgba(255,102,0,0.4);
         }
 
-        .summary-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .summary-item {
-            background: linear-gradient(135deg, var(--hanwha-light), #fff5ed);
-            color: var(--hanwha-dark);
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(255,102,0,0.1);
-            border: 2px solid #ffcc80;
-        }
-
-        .summary-item h4 {
-            font-size: 1.1em;
-            margin-bottom: 10px;
-            font-weight: 700;
-            color: var(--hanwha);
-        }
-
-        .summary-item .value {
-            font-size: 1.8em;
-            font-weight: 700;
-            color: var(--hanwha-dark);
-        }
-
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 2em;
@@ -231,7 +206,7 @@
             }
             
             input[type="number"] {
-                width: 60px;
+                width: 80px;
                 font-size: 12px;
             }
             
@@ -244,14 +219,14 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>보험 시상 계산기</h1>
-            <p>보험 상품별 건수와 월납을 입력하여 시상금을 계산하세요</p>
+            <h1>개시차 돈벼락 계산기</h1>
+            <p>예상 실적을 입력하여 돈벼락을 계산해보세요</p>
         </div>
         
         <div class="content">
-            <!-- 리치 상품 입력 섹션 -->
+            <!-- 예상 실적 입력하기 섹션 -->
             <div class="section">
-                <h2 class="section-title">리치 상품</h2>
+                <h2 class="section-title">예상 실적 입력하기</h2>
                 <div class="table-container">
                     <table>
                         <thead>
@@ -261,281 +236,228 @@
                                 <th>월납</th>
                             </tr>
                         </thead>
-                        <tbody id="rich-products">
-                            <tr data-product="rich-10">
-                                <td>리치 10년납</td>
-                                <td><input type="number" id="rich-10-count" value="1" min="0"></td>
-                                <td><input type="number" id="rich-10-premium" value="1000" min="0"></td>
-                            </tr>
-                            <tr data-product="rich-57">
-                                <td>리치 5/7년납</td>
-                                <td><input type="number" id="rich-57-count" value="0" min="0"></td>
-                                <td><input type="number" id="rich-57-premium" value="0" min="0"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- 인보장 상품 입력 섹션 -->
-            <div class="section">
-                <h2 class="section-title">인보장 상품</h2>
-                <div class="table-container">
-                    <table>
-                        <thead>
+                        <tbody>
                             <tr>
-                                <th>구분</th>
-                                <th>건수</th>
-                                <th>월납</th>
+                                <td>리치 10년납</td>
+                                <td><input type="number" id="rich-10-count" value="1" min="0" placeholder="건"></td>
+                                <td><input type="number" id="rich-10-premium" value="1000" min="0" placeholder="천원"></td>
                             </tr>
-                        </thead>
-                        <tbody id="insurance-products">
-                            <tr data-product="hanareum">
+                            <tr>
+                                <td>리치 5/7년납</td>
+                                <td><input type="number" id="rich-57-count" value="0" min="0" placeholder="건"></td>
+                                <td><input type="number" id="rich-57-premium" value="0" min="0" placeholder="천원"></td>
+                            </tr>
+                            <tr>
                                 <td>한아름/시그니처</td>
-                                <td><input type="number" id="hanareum-count" value="1" min="0"></td>
-                                <td><input type="number" id="hanareum-premium" value="50" min="0"></td>
+                                <td><input type="number" id="hanareum-count" value="1" min="0" placeholder="건"></td>
+                                <td><input type="number" id="hanareum-premium" value="50" min="0" placeholder="천원"></td>
                             </tr>
-                            <tr data-product="sick">
+                            <tr>
                                 <td>3N5등 유병자</td>
-                                <td><input type="number" id="sick-count" value="1" min="0"></td>
-                                <td><input type="number" id="sick-premium" value="50" min="0"></td>
+                                <td><input type="number" id="sick-count" value="1" min="0" placeholder="건"></td>
+                                <td><input type="number" id="sick-premium" value="50" min="0" placeholder="천원"></td>
                             </tr>
-                            <tr data-product="child">
+                            <tr>
                                 <td>어린이/자녀</td>
-                                <td><input type="number" id="child-count" value="1" min="0"></td>
-                                <td><input type="number" id="child-premium" value="100" min="0"></td>
+                                <td><input type="number" id="child-count" value="1" min="0" placeholder="건"></td>
+                                <td><input type="number" id="child-premium" value="100" min="0" placeholder="천원"></td>
                             </tr>
-                            <tr data-product="other">
+                            <tr>
                                 <td>기타 인보장</td>
-                                <td><input type="number" id="other-count" value="0" min="0"></td>
-                                <td><input type="number" id="other-premium" value="0" min="0"></td>
+                                <td><input type="number" id="other-count" value="0" min="0" placeholder="건"></td>
+                                <td><input type="number" id="other-premium" value="0" min="0" placeholder="천원"></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- 계산 버튼 -->
-            <button class="calculate-btn" onclick="calculate()">시상금 계산하기</button>
-
-            <!-- 리치 상품 시상 합계 -->
+            <!-- 개시차 돈벼락 섹션 -->
             <div class="section">
-                <div class="result-card">
-                    <h3>리치 상품 시상 합계</h3>
-                    <div class="amount" id="rich-total">4,000천원</div>
-                    <div class="rate">지급률: <span id="rich-rate">4.0%</span></div>
-                </div>
-                
+                <h2 class="section-title">개시차 돈벼락</h2>
                 <div class="table-container">
                     <table>
                         <thead>
                             <tr>
                                 <th>구분</th>
                                 <th>시상금</th>
+                                <th>지급률</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>리치 10년납</td>
-                                <td id="rich-10-reward">4,000천원</td>
+                                <td>리치 합계</td>
+                                <td id="rich-total">0천원</td>
+                                <td id="rich-rate">0</td>
                             </tr>
                             <tr>
-                                <td>리치 5/7년납</td>
-                                <td id="rich-57-reward">0천원</td>
+                                <td>인보장(130%,70%)</td>
+                                <td id="insurance-130-70">0천원</td>
+                                <td id="insurance-130-70-rate">0</td>
+                            </tr>
+                            <tr>
+                                <td>인보장(구간시상)</td>
+                                <td id="insurance-section">0천원</td>
+                                <td id="insurance-section-rate">0</td>
+                            </tr>
+                            <tr>
+                                <td>전략상품 3.6.9</td>
+                                <td id="strategy-369">0천원</td>
+                                <td id="strategy-369-rate">0</td>
+                            </tr>
+                            <tr>
+                                <td>투게더(회사적립)</td>
+                                <td id="together">0천원</td>
+                                <td id="together-rate">0</td>
+                            </tr>
+                            <tr>
+                                <td>인보장 합계</td>
+                                <td id="insurance-total">0천원</td>
+                                <td id="insurance-rate">0</td>
+                            </tr>
+                            <tr style="background: var(--hanwha-light); font-weight: bold;">
+                                <td>리치+인보장 시상합계</td>
+                                <td id="total-reward">0천원</td>
+                                <td id="total-rate">0</td>
                             </tr>
                         </tbody>
                     </table>
-                </div>
-            </div>
-
-            <!-- 항목별 시상금 -->
-            <div class="section">
-                <h2 class="section-title">항목별 시상금</h2>
-                <div class="summary-grid">
-                    <div class="summary-item">
-                        <h4>인보장(130%,70%)</h4>
-                        <div class="value" id="insurance-130-70">260천원</div>
-                        <small>지급률: <span id="insurance-130-70-rate">130%</span></small>
-                    </div>
-                    <div class="summary-item">
-                        <h4>인보장(구간시상)</h4>
-                        <div class="value" id="insurance-section">300천원</div>
-                        <small>지급률: <span id="insurance-section-rate">150%</span></small>
-                    </div>
-                    <div class="summary-item">
-                        <h4>전략상품 3.6.9</h4>
-                        <div class="value" id="strategy-369">100천원</div>
-                        <small>지급률: <span id="strategy-369-rate">50%</span></small>
-                    </div>
-                    <div class="summary-item">
-                        <h4>투게더(회사적립)</h4>
-                        <div class="value" id="together">192천원</div>
-                        <small>지급률: <span id="together-rate">96%</span></small>
-                    </div>
-                </div>
-                
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>구분</th>
-                                <th>시상금</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>한아름/시그니처</td>
-                                <td id="hanareum-reward">100천원</td>
-                            </tr>
-                            <tr>
-                                <td>3N5등 유병자</td>
-                                <td id="sick-reward">200천원</td>
-                            </tr>
-                            <tr>
-                                <td>어린이/자녀</td>
-                                <td id="child-reward">350천원</td>
-                            </tr>
-                            <tr>
-                                <td>기타 인보장</td>
-                                <td id="other-reward">0천원</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- 인보장 상품 시상 합계 -->
-            <div class="section">
-                <div class="result-card">
-                    <h3>인보장 상품 시상 합계</h3>
-                    <div class="amount" id="insurance-total">852천원</div>
-                    <div class="rate">지급률: <span id="insurance-rate">4.26%</span></div>
-                </div>
-            </div>
-
-            <!-- 전체 시상 합계 -->
-            <div class="section">
-                <div class="result-card" style="background: linear-gradient(135deg, var(--hanwha-accent) 0%, var(--hanwha) 100%);">
-                    <h3>전체 시상 합계</h3>
-                    <div class="amount" id="total-reward">4,852천원</div>
-                    <div class="rate">전체 지급률: <span id="total-rate">4.04%</span></div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // 시상금 계산 규칙 (원본 엑셀 파일의 로직을 재현)
-        const rewardRules = {
-            rich: {
-                '10year': { baseReward: 4000, rate: 4.0 },
-                '57year': { baseReward: 0, rate: 0 }
-            },
-            insurance: {
-                hanareum: { baseReward: 100 },
-                sick: { baseReward: 200 },
-                child: { baseReward: 350 },
-                other: { baseReward: 0 }
-            }
-        };
+        // VLOOKUP 테이블 데이터 (엑셀의 G1:H8, J1:K6)
+        const sectionRewardTable = [
+            { min: -9999, reward: 0 },
+            { min: 0, reward: 0 },
+            { min: 50, reward: 50 },
+            { min: 100, reward: 100 },
+            { min: 200, reward: 300 },
+            { min: 300, reward: 500 },
+            { min: 400, reward: 800 },
+            { min: 9999, reward: 800 }
+        ];
+
+        const strategyRewardTable = [
+            { min: -999, reward: 0 },
+            { min: 0, reward: 0 },
+            { min: 3, reward: 100 },
+            { min: 6, reward: 200 },
+            { min: 9, reward: 350 },
+            { min: 999, reward: 350 }
+        ];
 
         function formatNumber(num) {
-            return new Intl.NumberFormat('ko-KR').format(num);
+            return new Intl.NumberFormat('ko-KR').format(Math.round(num));
+        }
+
+        function vlookup(value, table, approximate = true) {
+            if (approximate) {
+                // 근사 일치 (VLOOKUP의 세 번째 인수가 TRUE일 때)
+                let result = table[0].reward;
+                for (let i = 0; i < table.length; i++) {
+                    if (value >= table[i].min) {
+                        result = table[i].reward;
+                    } else {
+                        break;
+                    }
+                }
+                return result;
+            }
         }
 
         function calculateRichRewards() {
-            const rich10Count = parseInt(document.getElementById('rich-10-count').value.replace(/[^0-9]/g, '') || '0');
-            const rich10Premium = parseInt(document.getElementById('rich-10-premium').value.replace(/[^0-9]/g, '') || '0');
-            const rich57Count = parseInt(document.getElementById('rich-57-count').value.replace(/[^0-9]/g, '') || '0');
-            const rich57Premium = parseInt(document.getElementById('rich-57-premium').value.replace(/[^0-9]/g, '') || '0');
+            const rich10Premium = parseInt(document.getElementById('rich-10-premium').value || '0');
+            const rich57Premium = parseInt(document.getElementById('rich-57-premium').value || '0');
 
-            // 리치 10년납 시상금 계산 (천원 단위)
-            let rich10Reward = 0;
-            if (rich10Count > 0 && rich10Premium >= 1000) {
-                rich10Reward = rich10Count * 4000;
-            }
+            // 엑셀 공식: D2*4+D3*1.5
+            const richTotal = rich10Premium * 4 + rich57Premium * 1.5;
+            
+            // 총 월납 계산: SUM(D2:D3)
+            const totalRichPremium = rich10Premium + rich57Premium;
+            
+            // 지급률 계산: C10/SUM(D2:D3)
+            const richRate = totalRichPremium > 0 ? (richTotal / totalRichPremium).toFixed(2) : 0;
 
-            // 리치 5/7년납 시상금 계산 (로직 추정, 천원 단위)
-            let rich57Reward = 0;
-            if (rich57Count > 0) {
-                rich57Reward = rich57Count * Math.floor(rich57Premium / 50) * 50;
-            }
+            document.getElementById('rich-total').textContent = formatNumber(richTotal) + '천원';
+            document.getElementById('rich-rate').textContent = richRate;
 
-            document.getElementById('rich-10-reward').textContent = formatNumber(rich10Reward);
-            document.getElementById('rich-57-reward').textContent = formatNumber(rich57Reward);
-
-            const totalRichReward = rich10Reward + rich57Reward;
-            const totalRichPremium = (rich10Count * rich10Premium) + (rich57Count * rich57Premium);
-            const richRate = totalRichPremium > 0 ? (totalRichReward / totalRichPremium * 100).toFixed(2) : 0;
-
-            document.getElementById('rich-total').textContent = formatNumber(totalRichReward) + '천원';
-            document.getElementById('rich-rate').textContent = richRate + '%';
-
-            return { total: totalRichReward, premium: totalRichPremium };
+            return { total: richTotal, premium: totalRichPremium };
         }
 
         function calculateInsuranceRewards() {
-            const hanareumCount = parseInt(document.getElementById('hanareum-count').value.replace(/[^0-9]/g, '') || '0');
-            const hanareumPremium = parseInt(document.getElementById('hanareum-premium').value.replace(/[^0-9]/g, '') || '0');
-            const sickCount = parseInt(document.getElementById('sick-count').value.replace(/[^0-9]/g, '') || '0');
-            const sickPremium = parseInt(document.getElementById('sick-premium').value.replace(/[^0-9]/g, '') || '0');
-            const childCount = parseInt(document.getElementById('child-count').value.replace(/[^0-9]/g, '') || '0');
-            const childPremium = parseInt(document.getElementById('child-premium').value.replace(/[^0-9]/g, '') || '0');
-            const otherCount = parseInt(document.getElementById('other-count').value.replace(/[^0-9]/g, '') || '0');
-            const otherPremium = parseInt(document.getElementById('other-premium').value.replace(/[^0-9]/g, '') || '0');
+            const hanareumPremium = parseInt(document.getElementById('hanareum-premium').value || '0');
+            const sickPremium = parseInt(document.getElementById('sick-premium').value || '0');
+            const childPremium = parseInt(document.getElementById('child-premium').value || '0');
+            const otherPremium = parseInt(document.getElementById('other-premium').value || '0');
 
-            // 각 상품별 기본 시상금 계산 (천원 단위)
-            const hanareumReward = hanareumCount * 100;
-            const sickReward = sickCount * 200;
-            const childReward = childCount * 350;
-            const otherReward = otherCount * 0; // 기타는 0
+            const hanareumCount = parseInt(document.getElementById('hanareum-count').value || '0');
+            const sickCount = parseInt(document.getElementById('sick-count').value || '0');
+            const childCount = parseInt(document.getElementById('child-count').value || '0');
 
-            document.getElementById('hanareum-reward').textContent = formatNumber(hanareumReward);
-            document.getElementById('sick-reward').textContent = formatNumber(sickReward);
-            document.getElementById('child-reward').textContent = formatNumber(childReward);
-            document.getElementById('other-reward').textContent = formatNumber(otherReward);
+            // 엑셀 공식들 적용
+            
+            // C11: SUM(D4:D6)*1.3+D7*0.7
+            const insurance13070 = (hanareumPremium + sickPremium + childPremium) * 1.3 + otherPremium * 0.7;
+            const insurance13070Rate = (hanareumPremium + sickPremium + childPremium + otherPremium) > 0 ? 
+                (insurance13070 / (hanareumPremium + sickPremium + childPremium + otherPremium)).toFixed(2) : 0;
 
-            const totalInsurancePremium = (hanareumCount * hanareumPremium) + 
-                                        (sickCount * sickPremium) + 
-                                        (childCount * childPremium) + 
-                                        (otherCount * otherPremium);
+            // C12: VLOOKUP(SUM(D4:D7),$G$1:$H$8,2,1)
+            const totalInsurancePremium = hanareumPremium + sickPremium + childPremium + otherPremium;
+            const insuranceSection = vlookup(totalInsurancePremium, sectionRewardTable);
+            const insuranceSectionRate = totalInsurancePremium > 0 ? 
+                (insuranceSection / totalInsurancePremium).toFixed(2) : 0;
 
-            // 추가 시상금 계산 (천원 단위, 지급률 100배 적용)
-            const insurance13070 = Math.floor(totalInsurancePremium * 1.3); // 1.3% → 130%
-            const insuranceSection = Math.floor(totalInsurancePremium * 1.5); // 1.5% → 150%
-            const strategy369 = Math.floor(totalInsurancePremium * 0.5); // 0.5% → 50%
-            const together = Math.floor(totalInsurancePremium * 0.96); // 0.96% → 96%
+            // C13: VLOOKUP(SUM(C4:C6),$J$1:$K$6,2,1)
+            const totalInsuranceCount = hanareumCount + sickCount + childCount;
+            const strategy369 = vlookup(totalInsuranceCount, strategyRewardTable);
+            const strategy369Rate = totalInsurancePremium > 0 ? 
+                (strategy369 / totalInsurancePremium).toFixed(2) : 0;
 
+            // C14: SUM(D4:D6)*2.4*0.2*2
+            const together = (hanareumPremium + sickPremium + childPremium) * 2.4 * 0.2 * 2;
+            const togetherRate = totalInsurancePremium > 0 ? 
+                (together / totalInsurancePremium).toFixed(2) : 0;
+
+            // C15: SUM(C11:C14)
+            const insuranceTotal = insurance13070 + insuranceSection + strategy369 + together;
+            const insuranceRate = totalInsurancePremium > 0 ? 
+                (insuranceTotal / totalInsurancePremium).toFixed(2) : 0;
+
+            // 결과 업데이트
             document.getElementById('insurance-130-70').textContent = formatNumber(insurance13070) + '천원';
+            document.getElementById('insurance-130-70-rate').textContent = insurance13070Rate;
+            
             document.getElementById('insurance-section').textContent = formatNumber(insuranceSection) + '천원';
+            document.getElementById('insurance-section-rate').textContent = insuranceSectionRate;
+            
             document.getElementById('strategy-369').textContent = formatNumber(strategy369) + '천원';
+            document.getElementById('strategy-369-rate').textContent = strategy369Rate;
+            
             document.getElementById('together').textContent = formatNumber(together) + '천원';
+            document.getElementById('together-rate').textContent = togetherRate;
+            
+            document.getElementById('insurance-total').textContent = formatNumber(insuranceTotal) + '천원';
+            document.getElementById('insurance-rate').textContent = insuranceRate;
 
-            document.getElementById('insurance-130-70-rate').textContent = '130%';
-            document.getElementById('insurance-section-rate').textContent = '150%';
-            document.getElementById('strategy-369-rate').textContent = '50%';
-            document.getElementById('together-rate').textContent = '96%';
-
-            const totalInsuranceReward = hanareumReward + sickReward + childReward + otherReward + 
-                                       insurance13070 + insuranceSection + strategy369 + together;
-            const insuranceRate = totalInsurancePremium > 0 ? (totalInsuranceReward / totalInsurancePremium * 100).toFixed(2) : 0;
-
-            document.getElementById('insurance-total').textContent = formatNumber(totalInsuranceReward) + '천원';
-            document.getElementById('insurance-rate').textContent = insuranceRate + '%';
-
-            return { total: totalInsuranceReward, premium: totalInsurancePremium };
+            return { total: insuranceTotal, premium: totalInsurancePremium };
         }
 
         function calculate() {
             const richResult = calculateRichRewards();
             const insuranceResult = calculateInsuranceRewards();
 
+            // C16: C15+C10
             const totalReward = richResult.total + insuranceResult.total;
+            
+            // D16: C16/SUM(D2:D7)
             const totalPremium = richResult.premium + insuranceResult.premium;
-            const totalRate = totalPremium > 0 ? (totalReward / totalPremium * 100).toFixed(2) : 0;
+            const totalRate = totalPremium > 0 ? (totalReward / totalPremium).toFixed(2) : 0;
 
             document.getElementById('total-reward').textContent = formatNumber(totalReward) + '천원';
-            document.getElementById('total-rate').textContent = totalRate + '%';
+            document.getElementById('total-rate').textContent = totalRate;
         }
 
         // 입력값 변경 시 자동 계산

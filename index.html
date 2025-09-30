@@ -239,8 +239,8 @@
                         <tbody>
                             <tr>
                                 <td>리치 10년납</td>
-                                <td><input type="number" id="rich-10-count" value="1" min="0" placeholder="건"></td>
-                                <td><input type="number" id="rich-10-premium" value="1000" min="0" placeholder="천원"></td>
+                                <td><input type="number" id="rich-10-count" value="0" min="0" placeholder="건"></td>
+                                <td><input type="number" id="rich-10-premium" value="0" min="0" placeholder="천원"></td>
                             </tr>
                             <tr>
                                 <td>리치 5/7년납</td>
@@ -249,18 +249,18 @@
                             </tr>
                             <tr>
                                 <td>한아름/시그니처</td>
-                                <td><input type="number" id="hanareum-count" value="1" min="0" placeholder="건"></td>
-                                <td><input type="number" id="hanareum-premium" value="50" min="0" placeholder="천원"></td>
+<td><input type="number" id="hanareum-count" value="0" min="0" placeholder="건"></td>
+<td><input type="number" id="hanareum-premium" value="0" min="0" placeholder="천원"></td>
                             </tr>
                             <tr>
                                 <td>3N5등 유병자</td>
-                                <td><input type="number" id="sick-count" value="1" min="0" placeholder="건"></td>
-                                <td><input type="number" id="sick-premium" value="50" min="0" placeholder="천원"></td>
+<td><input type="number" id="sick-count" value="0" min="0" placeholder="건"></td>
+<td><input type="number" id="sick-premium" value="0" min="0" placeholder="천원"></td>
                             </tr>
                             <tr>
                                 <td>어린이/자녀</td>
-                                <td><input type="number" id="child-count" value="1" min="0" placeholder="건"></td>
-                                <td><input type="number" id="child-premium" value="100" min="0" placeholder="천원"></td>
+<td><input type="number" id="child-count" value="0" min="0" placeholder="건"></td>
+<td><input type="number" id="child-premium" value="0" min="0" placeholder="천원"></td>
                             </tr>
                             <tr>
                                 <td>기타 인보장</td>
@@ -369,23 +369,27 @@
         }
 
         function calculateRichRewards() {
-            const rich10Premium = parseInt(document.getElementById('rich-10-premium').value || '0');
-            const rich57Premium = parseInt(document.getElementById('rich-57-premium').value || '0');
+    const rich10Premium = parseInt(document.getElementById('rich-10-premium').value || '0');
+    const rich57Premium = parseInt(document.getElementById('rich-57-premium').value || '0');
 
-            // 엑셀 공식: D2*4+D3*1.5
-            const richTotal = rich10Premium * 4 + rich57Premium * 1.5;
-            
-            // 총 월납 계산: SUM(D2:D3)
-            const totalRichPremium = rich10Premium + rich57Premium;
-            
-            // 지급률 계산: C10/SUM(D2:D3)
-            const richRate = totalRichPremium > 0 ? (richTotal / totalRichPremium).toFixed(2) : 0;
+    // 1건당 200천원 이상일 경우에만 시상금 적용
+    const rich10Reward = rich10Premium >= 200 ? rich10Premium * 4 : 0;
+    const rich57Reward = rich57Premium >= 200 ? rich57Premium * 1.5 : 0;
+    
+    // 리치 합계 시상금
+    const richTotal = rich10Reward + rich57Reward;
+    
+    // 총 월납 계산: SUM(D2:D3)
+    const totalRichPremium = rich10Premium + rich57Premium;
+    
+    // 지급률 계산: C10/SUM(D2:D3)
+    const richRate = totalRichPremium > 0 ? (richTotal / totalRichPremium * 100).toFixed(2) : 0;
 
-            document.getElementById('rich-total').textContent = formatNumber(richTotal) + '천원';
-            document.getElementById('rich-rate').textContent = richRate;
+    document.getElementById('rich-total').textContent = formatNumber(richTotal) + '천원';
+    document.getElementById('rich-rate').textContent = richRate + '%';
 
-            return { total: richTotal, premium: totalRichPremium };
-        }
+    return { total: richTotal, premium: totalRichPremium };
+}
 
         function calculateInsuranceRewards() {
             const hanareumPremium = parseInt(document.getElementById('hanareum-premium').value || '0');
@@ -401,46 +405,50 @@
             
             // C11: SUM(D4:D6)*1.3+D7*0.7
             const insurance13070 = (hanareumPremium + sickPremium + childPremium) * 1.3 + otherPremium * 0.7;
-            const insurance13070Rate = (hanareumPremium + sickPremium + childPremium + otherPremium) > 0 ? 
-                (insurance13070 / (hanareumPremium + sickPremium + childPremium + otherPremium)).toFixed(2) : 0;
+const insurance13070Rate = (hanareumPremium + sickPremium + childPremium + otherPremium) > 0 ? 
+    (insurance13070 / (hanareumPremium + sickPremium + childPremium + otherPremium) * 100).toFixed(2) : 0;
 
             // C12: VLOOKUP(SUM(D4:D7),$G$1:$H$8,2,1)
             const totalInsurancePremium = hanareumPremium + sickPremium + childPremium + otherPremium;
             const insuranceSection = vlookup(totalInsurancePremium, sectionRewardTable);
-            const insuranceSectionRate = totalInsurancePremium > 0 ? 
-                (insuranceSection / totalInsurancePremium).toFixed(2) : 0;
+const insuranceSectionRate = totalInsurancePremium > 0 ? 
+    (insuranceSection / totalInsurancePremium * 100).toFixed(2) : 0;
 
             // C13: VLOOKUP(SUM(C4:C6),$J$1:$K$6,2,1)
             const totalInsuranceCount = hanareumCount + sickCount + childCount;
             const strategy369 = vlookup(totalInsuranceCount, strategyRewardTable);
-            const strategy369Rate = totalInsurancePremium > 0 ? 
-                (strategy369 / totalInsurancePremium).toFixed(2) : 0;
+const strategy369Rate = totalInsurancePremium > 0 ? 
+    (strategy369 / totalInsurancePremium * 100).toFixed(2) : 0;
 
             // C14: SUM(D4:D6)*2.4*0.2*2
             const together = (hanareumPremium + sickPremium + childPremium) * 2.4 * 0.2 * 2;
-            const togetherRate = totalInsurancePremium > 0 ? 
-                (together / totalInsurancePremium).toFixed(2) : 0;
+const togetherRate = totalInsurancePremium > 0 ? 
+    (together / totalInsurancePremium * 100).toFixed(2) : 0;
 
             // C15: SUM(C11:C14)
             const insuranceTotal = insurance13070 + insuranceSection + strategy369 + together;
-            const insuranceRate = totalInsurancePremium > 0 ? 
-                (insuranceTotal / totalInsurancePremium).toFixed(2) : 0;
+const insuranceRate = totalInsurancePremium > 0 ? 
+    (insuranceTotal / totalInsurancePremium * 100).toFixed(2) : 0;
+
+
+
+
 
             // 결과 업데이트
             document.getElementById('insurance-130-70').textContent = formatNumber(insurance13070) + '천원';
-            document.getElementById('insurance-130-70-rate').textContent = insurance13070Rate;
+            document.getElementById('insurance-130-70-rate').textContent = insurance13070Rate + '%';
             
             document.getElementById('insurance-section').textContent = formatNumber(insuranceSection) + '천원';
-            document.getElementById('insurance-section-rate').textContent = insuranceSectionRate;
+            document.getElementById('insurance-section-rate').textContent = insuranceSectionRate + '%';
             
             document.getElementById('strategy-369').textContent = formatNumber(strategy369) + '천원';
-            document.getElementById('strategy-369-rate').textContent = strategy369Rate;
+            document.getElementById('strategy-369-rate').textContent = strategy369Rate + '%';
             
             document.getElementById('together').textContent = formatNumber(together) + '천원';
-            document.getElementById('together-rate').textContent = togetherRate;
+            document.getElementById('together-rate').textContent = togetherRate + '%';
             
             document.getElementById('insurance-total').textContent = formatNumber(insuranceTotal) + '천원';
-            document.getElementById('insurance-rate').textContent = insuranceRate;
+            document.getElementById('insurance-rate').textContent = insuranceRate + '%';
 
             return { total: insuranceTotal, premium: totalInsurancePremium };
         }
@@ -454,10 +462,10 @@
             
             // D16: C16/SUM(D2:D7)
             const totalPremium = richResult.premium + insuranceResult.premium;
-            const totalRate = totalPremium > 0 ? (totalReward / totalPremium).toFixed(2) : 0;
+const totalRate = totalPremium > 0 ? (totalReward / totalPremium * 100).toFixed(2) : 0;
 
-            document.getElementById('total-reward').textContent = formatNumber(totalReward) + '천원';
-            document.getElementById('total-rate').textContent = totalRate;
+document.getElementById('total-reward').textContent = formatNumber(totalReward) + '천원';
+document.getElementById('total-rate').textContent = totalRate + '%';
         }
 
         // 입력값 변경 시 자동 계산

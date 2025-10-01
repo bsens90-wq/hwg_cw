@@ -656,10 +656,10 @@
             
             // D16: C16/SUM(D2:D7)
             const totalPremium = richResult.premium + insuranceResult.premium;
-            const totalRate = totalPremium > 0 ? (totalReward / totalPremium * 100) : 0;
+const totalRate = totalPremium > 0 ? Math.floor(totalReward / totalPremium * 100) : 0;
 
-            document.getElementById('total-reward').textContent = formatNumber(totalReward) + '천원';
-            document.getElementById('total-rate').textContent = totalRate + '%';
+document.getElementById('total-reward').textContent = formatNumber(totalReward) + '천원';
+document.getElementById('total-rate').textContent = Math.floor(totalRate) + '%';
         }
 
         // 돈벼락 애니메이션 함수

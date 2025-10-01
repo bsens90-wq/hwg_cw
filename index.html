@@ -252,7 +252,7 @@
 
         .money-bill {
             position: absolute;
-            font-size: 24px;
+            font-size: 48px;
             color: var(--hanwha);
             font-weight: bold;
             text-shadow: 0 0 10px rgba(255,102,0,0.5);
@@ -572,8 +572,8 @@
             
             // 랜덤 위치와 애니메이션 시간
             bill.style.left = Math.random() * 100 + 'vw';
-            bill.style.animationDuration = (Math.random() * 3 + 2) + 's';
-            bill.style.animationDelay = Math.random() * 2 + 's';
+            bill.style.animationDuration = (Math.random() * 1.5 + 1) + 's';
+            bill.style.animationDelay = Math.random() * 0.5 + 's';
             
             container.appendChild(bill);
             

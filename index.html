@@ -593,7 +593,7 @@
             const richRate = totalRichPremium > 0 ? Math.floor(richTotal / totalRichPremium * 100) : 0;
 
             document.getElementById('rich-total').textContent = formatNumber(richTotal) + '천원';
-            document.getElementById('rich-rate').textContent = richRate + '%';
+            document.getElementById('rich-rate').textContent =  Math.floor(richRate) + '%';
 
             return { total: richTotal, premium: totalRichPremium };
         }
@@ -633,19 +633,19 @@
 
             // 결과 업데이트
             document.getElementById('insurance-130-70').textContent = formatNumber(insurance13070) + '천원';
-            document.getElementById('insurance-130-70-rate').textContent = insurance13070Rate + '%';
+            document.getElementById('insurance-130-70-rate').textContent =  Math.floor(insurance13070Rate) + '%';
             
             document.getElementById('insurance-section').textContent = formatNumber(insuranceSection) + '천원';
-            document.getElementById('insurance-section-rate').textContent = insuranceSectionRate + '%';
+            document.getElementById('insurance-section-rate').textContent =  Math.floor(insuranceSectionRate) + '%';
             
             document.getElementById('strategy-369').textContent = formatNumber(strategy369) + '천원';
-            document.getElementById('strategy-369-rate').textContent = strategy369Rate + '%';
+            document.getElementById('strategy-369-rate').textContent =  Math.floor(strategy369Rate) + '%';
             
             document.getElementById('together').textContent = formatNumber(together) + '천원';
-            document.getElementById('together-rate').textContent = togetherRate + '%';
+            document.getElementById('together-rate').textContent =  Math.floor(togetherRate) + '%';
             
             document.getElementById('insurance-total').textContent = formatNumber(insuranceTotal) + '천원';
-            document.getElementById('insurance-rate').textContent = insuranceRate + '%';
+            document.getElementById('insurance-rate').textContent =  Math.floor(insuranceRate) + '%';
 
             return { total: insuranceTotal, premium: totalInsurancePremium };
         }
